@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}
+  Edit
+{% endblock %}
+
+{% block content %}
+  
+  <div class="container">
+    <h1>Edit Table</h1>
+
+    <hr>
+
+    <form method="POST" class="edit-form">
+      {{ form.hidden_tag() }}
+
+      {{ form.tahun.label() }}
+      {{ form.tahun(class="form-control my-2", placeholder="Tahun")}}
+
+      {{ form.col1.label() }}
+      {{ form.col1(class="form-control my-2", placeholder="Col1")}}
+
+      {{ form.col2.label() }}
+      {{ form.col2(class="form-control my-2", placeholder="Col3")}}
+
+      {{ form.col3.label() }}
+      {{ form.col3(class="form-control my-2", placeholder="Col3")}}
+
+      {{ form.district_id.label() }}
+      {{ form.district_id(class="form-control my-2", placeholder="Test")}}
+
+      <br>
+
+      {{ form.submit(class="btn btn-primary btn-large btn-block")}}
+
+    </form>
+
+  </div>
+
+{% endblock %}
