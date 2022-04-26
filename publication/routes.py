@@ -4,11 +4,13 @@ from flask import render_template, flash, redirect, url_for, request
 from publication.forms import LoginForm, EditTableForm
 from flask_login import current_user, login_user, logout_user, login_required
 
+# home page
 @app.route('/')
 @app.route('/home')
 def home_page():
   return render_template('index.html')
 
+# publication page
 @app.route('/publikasi')
 def publikasi_page():
   return render_template('publikasi.html')
