@@ -19,7 +19,7 @@
 
     <hr>
 
-    <h3>Kota Palu</h3>
+    <h3>{{ district_name.name }}</h3>    
 
     <table class="table">
       <thead>
@@ -28,7 +28,7 @@
           <th scope="col">Column 1</th>
           <th scope="col">Column 2</th>
           <th scope="col">Column 3</th>
-          {% if current_user.role == 'admin' or current_user.officer_of_agency == 2 %}
+          {% if current_user.role == 'admin' or current_user.officer_of_district == id_path %}
             <th scope="col">Keterangan</th>
           {% endif %}
         </tr>
@@ -40,14 +40,14 @@
             <td>{{ d.col1 }}</td>
             <td>{{ d.col2 }}</td>
             <td>{{ d.col3 }}</td>
-            {% if current_user.role == 'admin' or current_user.officer_of_agency == 2 %}
+            {% if current_user.role == 'admin' or current_user.officer_of_district == id_path %}
               <td><a href="{{ url_for('delete_row_b', id=d.id) }}" class="btn btn-danger">Hapus</a></td>
             {% endif %}
         {% endfor %}
       </tbody>
     </table>
 
-    {% if current_user.role == 'admin' or current_user.officer_of_agency == 2 %}
+    {% if current_user.role == 'admin' or current_user.officer_of_district == id_path %}
       <a href="{{ url_for('dinas_b_add') }}" class="btn btn-primary">Tambah</a>
     {% endif %}
   
