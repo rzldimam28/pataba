@@ -17,13 +17,13 @@ def publikasi_page():
 
 # ------------------------------------  ( DINAS A) --------------------------------------------
 # dinas A (Kota)
-@app.route('/a')
+@app.route('/publikasi/a')
 def dinas_a():
   data = DinasA.query.filter_by(district_id=None).order_by(DinasA.tahun).all()
   return render_template('dinas_a.html', data=data)
 
 # dinas A (Kecamatan)
-@app.route('/a/<int:district_id>')
+@app.route('/publikasi/a/<int:district_id>')
 def dinas_a_kec(district_id):
   data = DinasA.query.filter_by(district_id=district_id).order_by(DinasA.tahun).all()
   id_path = int(str(request.path)[-1])
@@ -31,54 +31,62 @@ def dinas_a_kec(district_id):
   return render_template('dinas_a_kec.html', data=data, district_id=district_id, id_path=id_path, district_name=district_name)
 
 # edit tabel
-@app.route('/a/add', methods=['GET', 'POST'])
+@app.route('/publikasi/a/add', methods=['GET', 'POST'])
 @login_required
 def dinas_a_add():
-  form = EditTableForm()
-  if form.validate_on_submit():
-    if form.district_id.data == 'None':
-      form.district_id.data = eval(form.district_id.data)
-    else:
-      form.district_id.data = int(form.district_id.data)
-    if current_user.role == 'admin' or current_user.officer_of_district == form.district_id.data:
-      rows_to_create = DinasA(tahun=form.tahun.data,
-                              col1=form.col1.data,
-                              col2=form.col2.data,
-                              col3=form.col3.data,
-                              district_id=form.district_id.data
-                              )
-      db.session.add(rows_to_create)
-      db.session.commit()
-      flash('Table Edited!', category='success')
-      return redirect(url_for('dinas_a'))
-    else:  
-      flash('Unauthorized', category='danger')
-      return redirect(url_for('dinas_a_add')) 
-  return render_template('edit_table.html', form=form)
+  if current_user.role == 'admin' or current_user.officer_of_agency == 1 or current_user.officer_of_agency == None:
+    form = EditTableForm()
+    if form.validate_on_submit():
+      if form.district_id.data == 'None':
+        form.district_id.data = eval(form.district_id.data)
+      else:
+        form.district_id.data = int(form.district_id.data)
+      if current_user.role == 'admin' or current_user.officer_of_district == form.district_id.data:
+        rows_to_create = DinasA(tahun=form.tahun.data,
+                                col1=form.col1.data,
+                                col2=form.col2.data,
+                                col3=form.col3.data,
+                                district_id=form.district_id.data
+                                )
+        db.session.add(rows_to_create)
+        db.session.commit()
+        flash('Table Edited!', category='success')
+        return redirect(url_for('dinas_a'))
+      else:  
+        flash('Unauthorized', category='danger')
+        return redirect(url_for('dinas_a_add'))
+  else:
+    flash('Bukan Dinasmu', category='danger')
+    return redirect(url_for('publikasi_page')) 
+  return render_template('dinas_a_edit.html', form=form)
 
 # hapus record
-@app.route('/a/delete/<int:id>')
+@app.route('/publikasi/a/delete/<int:id>')
 @login_required
 def delete_row_a(id):
   row_to_delete = DinasA.query.filter_by(id=id).first()
-  if current_user.role == 'admin' or current_user.officer_of_district == row_to_delete.district_id:
-    db.session.delete(row_to_delete)
-    db.session.commit()
-    return redirect(url_for('dinas_a'))
+  if current_user.role == 'admin' or current_user.officer_of_agency == 1 or current_user.officer_of_agency == None:
+    if current_user.officer_of_district == row_to_delete.district_id:
+      db.session.delete(row_to_delete)
+      db.session.commit()
+      return redirect(url_for('dinas_a'))
+    else:
+      flash('Unauthorized', category='danger')
+      return redirect(url_for('dinas_a'))
   else:
-    flash('Unauthorized', category='danger')
+    flash('Bukan Dinasmu', category='danger')
     return redirect(url_for('dinas_a'))
 # -------------------------------------- ( AKHIR DINAS A) -------------------------------------------
 
 # ------------------------------------  ( DINAS B ) --------------------------------------------
 # dinas b (Kota)
-@app.route('/b')
+@app.route('/publikasi/b')
 def dinas_b():
   data = DinasB.query.filter_by(district_id=None).order_by(DinasB.tahun).all()
   return render_template('dinas_b.html', data=data)
 
 # dinas b (Kecamatan)
-@app.route('/b/<int:district_id>')
+@app.route('/publikasi/b/<int:district_id>')
 def dinas_b_kec(district_id):
   data = DinasB.query.filter_by(district_id=district_id).order_by(DinasB.tahun).all()
   id_path = int(str(request.path)[-1])
@@ -86,44 +94,53 @@ def dinas_b_kec(district_id):
   return render_template('dinas_b_kec.html', data=data, district_id=district_id, id_path=id_path, district_name=district_name)
 
 # edit tabel
-@app.route('/b/add', methods=['GET', 'POST'])
+@app.route('/publikasi/b/add', methods=['GET', 'POST'])
 @login_required
 def dinas_b_add():
-  form = EditTableForm()
-  if form.validate_on_submit():
-    if form.district_id.data == 'None':
-      form.district_id.data = eval(form.district_id.data)
-    else:
-      form.district_id.data = int(form.district_id.data)
-    if current_user.role == 'admin' or current_user.officer_of_district == form.district_id.data:
-      rows_to_create = DinasB(tahun=form.tahun.data,
-                              col1=form.col1.data,
-                              col2=form.col2.data,
-                              col3=form.col3.data,
-                              district_id=form.district_id.data
-                              )
-      db.session.add(rows_to_create)
-      db.session.commit()
-      flash('Table Edited!', category='success')
-      return redirect(url_for('dinas_b'))
-    else:  
-      flash('Unauthorized', category='danger')
-      return redirect(url_for('dinas_b_add')) 
-  return render_template('edit_table.html', form=form)
+  if current_user.role == 'admin' or current_user.officer_of_agency == 2 or current_user.officer_of_agency == None:
+    form = EditTableForm()
+    if form.validate_on_submit():
+      if form.district_id.data == 'None':
+        form.district_id.data = eval(form.district_id.data)
+      else:
+        form.district_id.data = int(form.district_id.data)
+      if current_user.role == 'admin' or current_user.officer_of_district == form.district_id.data:
+        rows_to_create = DinasB(tahun=form.tahun.data,
+                                col1=form.col1.data,
+                                col2=form.col2.data,
+                                col3=form.col3.data,
+                                district_id=form.district_id.data
+                                )
+        db.session.add(rows_to_create)
+        db.session.commit()
+        flash('Table Edited!', category='success')
+        return redirect(url_for('dinas_b'))
+      else:  
+        flash('Unauthorized', category='danger')
+        return redirect(url_for('dinas_b_add'))
+  else:
+    flash('Bukan Dinasmu', category='danger')
+    return redirect(url_for('publikasi_page')) 
+  return render_template('dinas_b_edit.html', form=form)
 
 # hapus record
-@app.route('/b/delete/<int:id>')
+@app.route('/publikasi/b/delete/<int:id>')
 @login_required
 def delete_row_b(id):
   row_to_delete = DinasB.query.filter_by(id=id).first()
-  if current_user.role == 'admin' or current_user.officer_of_district == row_to_delete.district_id:
-    db.session.delete(row_to_delete)
-    db.session.commit()
-    return redirect(url_for('dinas_b'))
+  if current_user.role == 'admin' or current_user.officer_of_agency == 1 or current_user.officer_of_agency == None:
+    if current_user.officer_of_district == row_to_delete.district_id:
+      db.session.delete(row_to_delete)
+      db.session.commit()
+      return redirect(url_for('dinas_b'))
+    else:
+      flash('Unauthorized', category='danger')
+      return redirect(url_for('dinas_b'))
   else:
-    flash('Unauthorized', category='danger')
+    flash('Bukan Dinasmu', category='danger')
     return redirect(url_for('dinas_b'))
-# -------------------------------------- ( AKHIR DINAS A) -------------------------------------------
+
+# -------------------------------------- ( AKHIR DINAS B ) -------------------------------------------
 
 # login
 @app.route('/login', methods=['GET', 'POST'])
