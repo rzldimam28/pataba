@@ -21,7 +21,7 @@
 
     <h3>Kota Palu</h3>
 
-    <table class="table">
+    <table class="table" id="dinasATable">
       <thead>
         <tr>
           <th scope="col">Tahun</th>
@@ -51,7 +51,8 @@
       <a href="{{ url_for('dinas_a_add') }}" class="btn btn-primary">Tambah</a>
     {% endif %}
   
-  </div>
+    <button class="btn btn-info" onclick="exportTableToExcel('dinasATable', 'members-data')">Download Tabel</button>
 
+  </div>
 
 {% endblock %}
