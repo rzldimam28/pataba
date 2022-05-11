@@ -13,6 +13,6 @@ app.config['SECRET_KEY'] = 'my-super-secret-key'
 
 login_manager.login_view = 'login_page'
 login_manager.login_message = 'Harap Login Dulu'
-login_manager.login_message_category = 'info'
+login_manager.login_message_category = 'success'
 
 from publication import routes
