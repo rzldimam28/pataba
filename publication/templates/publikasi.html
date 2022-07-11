@@ -1,12 +1,38 @@
-{% extends 'base.html' %}
-{% block title %}
-  Publikasi
-{% endblock %}
+{% extends 'base.html' %} {% block title %} Publikasi {% endblock %} {% block content %}
 
-{% block content %}
+<!-- Content -->
 
-  <a class="btn btn-primary" href="{{ url_for('dinas_a') }}">Dinas A</a>
-  <a class="btn btn-primary" href="{{ url_for('dinas_b') }}">Dinas B</a>
-  <a class="btn btn-primary" href="#">Dinas C</a>
+<section>
+  <div class="container">
+    <div class="row mb-3">
+      <div class="col-12 text-center">
+        <h2>INSTANSI PEMERINTAHAN</h2>
+      </div>
+    </div>
+  </div>
+
+  <!-- card -->
+  <div class="d-flex gap-2" style="justify-content: center">
+    <div class="card p-2" style="width: 17rem">
+      <img src="{{ url_for('static', filename='img/howen-BvxmnX2CITU-unsplash.jpg')}} " alt="img" />
+      <div class="card-body">
+        <h4>Dinas Sekertariat Daerah</h4>
+        <p>Alamat</p>
+        <a class="btn btn-warning" href="{{ url_for('setda') }}">Buka</a>
+      </div>
+    </div>
+
+    <div class="card p-2" style="width: 17rem">
+      <img src="{{ url_for('static', filename='img/howen-BvxmnX2CITU-unsplash.jpg')}} " alt="img" />
+      <div class="card-body">
+        <h4>Dewan Perwakilan Rakyat Daerah</h4>
+        <p>Alamat</p>
+        <a class="btn btn-warning" href="{{ url_for('dprd') }}">Buka</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<br />
 
 {% endblock %}

@@ -1,4 +1,4 @@
-{% extends 'base_agi.html' %}
+{% extends 'base.html' %}
 {% block title %}
   Sekretariat Daerah
 {% endblock %}
@@ -20,9 +20,18 @@
     </div>
     <h3 class="text-center">Publikasi Setda Kecamatan {{ district_name.name }}</h3>
 
+    <button class="btn btn-sm btn-info btn-download" onclick="exportTableToExcel('setdaTable', 'tabel')">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-spreadsheet" viewBox="0 0 16 16">
+        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v4h10V2a1 1 0 0 0-1-1H4zm9 6h-3v2h3V7zm0 3h-3v2h3v-2zm0 3h-3v2h2a1 1 0 0 0 1-1v-1zm-4 2v-2H6v2h3zm-4 0v-2H3v1a1 1 0 0 0 1 1h1zm-2-3h2v-2H3v2zm0-3h2V7H3v2zm3-2v2h3V7H6zm3 3H6v2h3v-2z"/>
+      </svg>
+      <span>
+        Download Tabel
+      </span>
+    </button>
+
     <!-- awal tabel -->
-    <div class="table-responsive" style="padding: 5vh;">
-      <table class="table ">
+    <div class="table-responsive mb-5" style="padding: 5vh;">
+      <table class="table" id="setdaTable">
         <thead class="table-dark text-center">
           <tr>
             <th rowspan="2" scope="col">No</th>
@@ -35,12 +44,12 @@
             {% for d in data %}
               <th>
                 {{ d.tahun }}
-                {% if current_user.role == 'admin' or current_user.officer_of_district == id_path %}
+                {% if current_user.role == 'admin' or current_user.officer_of_agency == 1 %}
                   <span><a href="{{ url_for('setda_delete', id=d.id) }}" class="btn btn-danger rounded-circle">x</a></span>
                 {% endif %}
               </th>
             {% endfor %}
-            {% if current_user.role == 'admin' or current_user.officer_of_district == id_path %}
+            {% if current_user.role == 'admin' or current_user.officer_of_agency == 1 %}
               <th><a href="{{ url_for('setda_add') }}" class="btn btn-success">Tambah</a></th>
             {% endif %}
           </tr>
@@ -1592,6 +1601,7 @@
           <tr>
               <td>88</td>
               <td>Penyusunan Dokumen Perencanaan Perangkat Daerah</td>
+              <td></td>
               {% for d in data %}
                 <td>{{ d.u166 }}</td>
               {% endfor %}
@@ -1599,6 +1609,7 @@
           <tr>
               <td>89</td>
               <td>koordinasi dan penyusunan dokumen RKA - DPA</td>
+              <td></td>
               {% for d in data %}
                 <td>{{ d.u167 }}</td>
               {% endfor %}
@@ -1606,6 +1617,7 @@
           <tr>
               <td>90</td>
               <td>Koordinasi dan Penyususnan Laporan Capaian kinerja dan iktisar realisasi kinerja SKPD</td>
+              <td></td>
               {% for d in data %}
                 <td>{{ d.u168 }}</td>
               {% endfor %}
@@ -1613,6 +1625,7 @@
           <tr>
               <td>91</td>
               <td>Koordinasi dan Penyusunan Dokumen Perubahan RKA-SKPD</td>
+              <td></td>
               {% for d in data %}
                 <td>{{ d.u169 }}</td>
               {% endfor %}
@@ -1620,6 +1633,7 @@
           <tr>
               <td>92</td>
               <td>Fasilitasi Penyusunan Program Pembangunan</td>
+              <td></td>
               {% for d in data %}
                 <td>{{ d.u170 }}</td>
               {% endfor %}
@@ -1627,6 +1641,7 @@
           <tr>
               <td>93</td>
               <td> Monitoring dan evaluasi program pembangunan</td>
+              <td></td>
               {% for d in data %}
                 <td>{{ d.u171 }}</td>
               {% endfor %}
@@ -1634,6 +1649,7 @@
           <tr>
               <td>94</td>
               <td>Pengendalian dan Evaluasi Pelaksanaan Program</td>
+              <td></td>
               {% for d in data %}
                 <td>{{ d.u172 }}</td>
               {% endfor %}
@@ -1641,6 +1657,7 @@
           <tr>
               <td>95</td>
               <td>Jumlah daerah provinsi dengan indeks RB ≥ baik</td>
+              <td></td>
               {% for d in data %}
                 <td>{{ d.u173 }}</td>
               {% endfor %}
@@ -1648,6 +1665,7 @@
           <tr>
               <td>96</td>
               <td>Jumlah Daerah yang membentuk portal e-Legislasi</td>
+              <td></td>
               {% for d in data %}
                 <td>{{ d.u174 }}</td>
               {% endfor %}
@@ -1655,6 +1673,7 @@
           <tr>
               <td>97</td>
               <td>Jumlah daerah yang ditata dan diselesaikan permasalahan kelembagaan dan kepegawaian perangkat daerah</td>
+              <td></td>
               {% for d in data %}
                 <td>{{ d.u175 }}</td>
               {% endfor %}
@@ -1662,6 +1681,7 @@
           <tr>
               <td>98</td>
               <td>Jumlah daerah yang memiliki PTSP Prima berbasis elektronik</td>
+              <td></td>
               {% for d in data %}
                 <td>{{ d.u176 }}</td>
               {% endfor %}
@@ -1669,6 +1689,7 @@
           <tr>
               <td>99</td>
               <td>Jumlah perizinan dengan kewenangan sudah didelegasikan ke PTSP Prima berbasis elektroni</td>
+              <td></td>
               {% for d in data %}
                 <td>{{ d.u177 }}</td>
               {% endfor %}
@@ -1676,6 +1697,7 @@
           <tr>
               <td>100</td>
               <td>Jumlah pelaksanaan Perjanjian Kerja Sama dalam penyelesaian permasalahan pelayanan publik di 10 kota metropolitan (terutama permasalahan transportasi, banjir, air minum, serta sampah dan limbah)</td>
+              <td></td>
               {% for d in data %}
                 <td>{{ d.u178 }}</td>
               {% endfor %}
@@ -1683,6 +1705,7 @@
           <tr>
               <td>101</td>
               <td>Program Bina Sosial</td>
+              <td></td>
               {% for d in data %}
                 <td>{{ d.u179 }}</td>
               {% endfor %}

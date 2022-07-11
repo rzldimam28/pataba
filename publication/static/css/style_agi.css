@@ -32,3 +32,8 @@ nav {
   align-content: center;
   color: white;
 }
+
+.btn-download {
+  margin-left: 40px;
+  margin-bottom: -25px;
+}
