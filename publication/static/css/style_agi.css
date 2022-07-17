@@ -37,3 +37,69 @@ nav {
   margin-left: 40px;
   margin-bottom: -25px;
 }
+
+.swiper {
+  width: 950px;
+}
+
+section .card .image {
+  height: 140px;
+  width: 140px;
+  border-radius: 50%;
+  padding: 3px;
+  background:  #ff5f00;
+}
+
+section .card .image img{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid  #ffff ;
+}
+
+.card {
+  border-radius: 20px;
+  background: rgb(234, 234, 234);
+  height: 50vh;
+  width: 50vh;
+}
+
+.card::before{
+  content: "";
+  position: absolute;
+  height: 20vh;
+  width: 100%;
+  background: #ff5f00;
+  border-radius: 20px 20px 0 0;
+}
+
+.card .card-content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  position: relative;
+}
+
+.card .name-company{
+  margin-top: 10px;
+}
+
+.card .button {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.card .button button{
+  background: #ff5f00;
+  border-radius: 15px;
+  outline: none;
+  border: none;
+  color: #ffff;
+  padding: 6px 50px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
